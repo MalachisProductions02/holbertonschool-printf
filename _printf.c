@@ -21,10 +21,10 @@ int _printf(const char *format, ...)
 		{
 			format++;
 			if (*format == 'c')
-				count += _putchar(va_arg(arg, int));
+				count += _putchar(va_arg(args, int));
 			else if (*format == 's')
 			{
-				char *str = va_arg(arg, char *);
+				char *str = va_arg(args, char *);
 				int i = 0;
 
 				if (!str)
