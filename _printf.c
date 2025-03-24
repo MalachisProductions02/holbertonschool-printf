@@ -1,51 +1,52 @@
 #include "main.h"
+#include <stdarg.h>
+#include <stddef.h>
+#include <unistd.h>
 
 /**
- * _printf - Funcion imitadora a printf
- * @format: Parametro
- * Return: Resultado
+ * _printf - Produces output according to a format
+ * @format: The format string containing specifiers
+ * 
+ * Return: The number of characters printed (excluding null byte)
  */
 int _printf(const char *format, ...)
 {
-	va_list args;
-	int count = 0;
+    va_list args;
+    int count = 0, i;
+    char *str;
 
-	if (!format)
-		return (-1);
+    if (format == NULL)
+        return (-1);
 
-	va_start(args, format);
+    va_start(args, format);
 
-	while (*format)
-	{
-		if (*format == '%' && *(format + 1))
-		{
-			format++;
-			if (*format == 'c')
-				count += _putchar(va_arg(args, int));
-			else if (*format == 's')
-			{
-				char *str = va_arg(args, char *);
-				int i = 0;
+    for (i = 0; format[i] != '\0'; i++)
+    {
+        if (format[i] == '%')
+        {
+            i++; /* Move to specifier */
+            if (format[i] == 'c') /* Character */
+                count += _putchar(va_arg(args, int));
+            else if (format[i] == 's') /* String */
+            {
+                str = va_arg(args, char *);
+                if (str == NULL)
+                    str = "(null)";
+                while (*str)
+                    count += _putchar(*str++);
+            }
+            else if (format[i] == '%') /* Print % */
+                count += _putchar('%');
+            else /* Invalid specifier, print as-is */
+            {
+                count += _putchar('%');
+                count += _putchar(format[i]);
+            }
+        }
+        else
+            count += _putchar(format[i]);
+    }
 
-				if (!str)
-					str = "(null)";
-				while (str[i])
-					count += _putchar(str[i++]);
-			}
-			else if (*format == '%')
-				count += _putchar('%');
-			else
-			{
-				count += _putchar('%');
-				count += _putchar(*format);
-			}
-		}
-		else
-			count += _putchar(*format);
-
-		format++;
-	}
-
-	va_end(args);
-	return (count);
+    va_end(args);
+    return (count);
 }
