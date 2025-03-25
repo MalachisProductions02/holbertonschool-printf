@@ -4,6 +4,33 @@
 #include <unistd.h>
 
 /**
+ * print_number - Prints an integer to stdout
+ * @n: The integer to print
+ *
+ * Return: The number of digits printed
+ */
+int print_number(int n)
+{
+	int count = 0;
+	unsigned int num;
+
+	if (n < 0)
+	{
+		count += _putchar('-');
+		num = -n;
+	}
+	else
+		num = n;
+
+	if (num / 10)
+		count += print_number(num / 10);
+
+	count += _putchar((num % 10) + '0');
+
+	return (count);
+}
+
+/**
  * _printf - Produces output according to a format
  * @format: The format string containing specifiers
  *
@@ -24,7 +51,7 @@ int _printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			i++;
+			i++; /* Move to specifier */
 			if (format[i] == '\0')
 				return (-1);
 			else if (format[i] == 'c')
@@ -37,6 +64,8 @@ int _printf(const char *format, ...)
 				while (*str)
 					count += _putchar(*str++);
 			}
+			else if (format[i] == 'd' || format[i] == 'i')
+				count += print_number(va_arg(args, int));
 			else if (format[i] == '%')
 				count += _putchar('%');
 			else
