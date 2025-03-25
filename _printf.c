@@ -4,10 +4,9 @@
 #include <unistd.h>
 
 /**
- * _printf - Produces output according to a format
- * @format: The format string containing specifiers
- * 
- * Return: The number of characters printed (excluding null byte)
+ * _printf - Imprime
+ * @format: Parametro
+ * Return: Devuelve el resultado
  */
 int _printf(const char *format, ...)
 {
@@ -24,10 +23,12 @@ int _printf(const char *format, ...)
     {
         if (format[i] == '%')
         {
-            i++; /* Move to specifier */
-            if (format[i] == 'c') /* Character */
+            i++;
+            if (format[i] == '\0')
+                return (-1);
+            else if (format[i] == 'c')
                 count += _putchar(va_arg(args, int));
-            else if (format[i] == 's') /* String */
+            else if (format[i] == 's')
             {
                 str = va_arg(args, char *);
                 if (str == NULL)
@@ -35,9 +36,9 @@ int _printf(const char *format, ...)
                 while (*str)
                     count += _putchar(*str++);
             }
-            else if (format[i] == '%') /* Print % */
+            else if (format[i] == '%')
                 count += _putchar('%');
-            else /* Invalid specifier, print as-is */
+            else
             {
                 count += _putchar('%');
                 count += _putchar(format[i]);
