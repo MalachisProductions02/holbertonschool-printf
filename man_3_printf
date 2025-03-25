@@ -1,4 +1,4 @@
-.TH _PRINTF 3 "February 2025" "Holberton School" "My Own Printf"
+.TH _PRINTF 3 "February 2025" "Holberton School" "My First Printf"
 
 .SH NAME
 _printf \- Produces output according to a format.
@@ -11,14 +11,53 @@ _printf \- Produces output according to a format.
 .SH DESCRIPTION
 The
 .B _printf
-function produces output according to a format stringaand writes it.
+function produces output according to a format string and writes it to the standard output.
 
 The
 .I format
-String is composed of zero or more directives. Ordinary characters are printed as they appear.
+string is composed of zero or more directives. Ordinary characters are printed as they appear. Format specifiers begin with a 
 .B %
 character followed by a specific conversion specifier.
 
 Supported conversion specifiers:
 
 .TP
+.B %c
+Prints a single character.
+
+.TP
+.B %s
+Prints a string of characters.
+
+.TP
+.B %%
+Prints a literal `%` character.
+
+.TP
+.B %d, %i
+Prints a signed decimal integer.
+
+.SH RETURN VALUE
+Returns the number of characters printed (excluding the null byte used to end output to strings).
+
+.SH EXAMPLES
+.B #include "main.h"
+.br
+.B #include <stdio.h>
+.PP
+.B int main(void)
+.B {
+.BI "    _printf(""Character: %c\n"", 'A');"
+.BI "    _printf(""String: %s\n"", ""Holberton"");"
+.BI "    _printf(""Percent: %%\n"");"
+.BI "    _printf(""Integer: %d\n"", 42);"
+.BI "    _printf(""Negative: %d\n"", -12345);"
+.BI "    _printf(""Another int: %i\n"", 56789);"
+.BI "    return (0);"
+.B }
+
+.SH SEE ALSO
+.BR printf(3)
+
+.SH AUTHOR
+Holberton School Students
